@@ -4,4 +4,4 @@
 .terraform.lock.hcl
 crash.log
 mani.key
-mani-key.tf
+mani-key.pub
