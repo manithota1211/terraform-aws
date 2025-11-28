@@ -68,16 +68,18 @@
 * **Purpose**: Use the public EC2 as a jump host to securely access the private EC2 instance
 
 
-
+### If Git already tracked an unwanted file, remove it using:
 ### Verify the files are tracked by git
 
 # List tracked files
 git ls-files
 
 # Stop tracking files
-git rm --cached <file_name>
-git rm --cached *.tfstate
-git rm -r --cached <directory_name>
+commands
+
+##### git rm --cached <file_name>
+##### git rm --cached *.tfstate
+##### git rm -r --cached <directory_name>
 
 
 * The files are removed from GitHub (the remote repo) because Git now considers them untracked.
