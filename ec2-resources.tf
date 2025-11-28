@@ -1,8 +1,8 @@
 # creating key pair
 
 resource "aws_key_pair" "deployer" {
-    key_name = "mani_key"
-    public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC7fdxjK979Q1mKqXFD9hms5jSsjZ+3RUX8pafcj2gCfei9PnlGDP9n9isms96nNAM8wU9hJaMkW8MajKZFf4/gl4iW+q/T6nRAqAXavNbrQ544Zh7mwoILLUdFEQ6ldqjAKpLNvc76s82AtWNlluOOmyB+6iLEpks5gocqS5O9BPxuHTq4ATR/+lsOcQylHrhryV66haba2wdVAuiNQr2YH5Dug2db+GLLwJOoE/v4ybdUEEo4/YNZbEp+lg1wIWx8oKLTnbLflq/RhsyLr1ooD592/R5UmTOzU6zwLAuJpShBO6Hs1GWPxlqxLpIbJvTTaf3vGTKZk2xE16K3xEu8KmmDlRc+sz3FmzyLJQYl8HZKq+QAt0GV63ib2+Fvk4PMh+qQeDfgfuc62X4J1VGrSXzZAWWVmqQeMEV5DTxc6rmwOdfiPxZi6MNuJshm4b3kEmWGsPkx6dqxZaV8/GzzWP9hwyUZI0NI4Qb60QdPR3N8AigyzvkJ4nEmTk+fyExc7GjqisXyhd1pc0K57iNB6Y8q7yQ4MM+b0pJOLs6/zvf7AiVupc80QkkNRvDKHVCX505ypZS/ijpsZXv2k8idyJT+I5Bh+6qO58GZDXgZWJf0NDLuffwL4/D5o07cXV/JuYsC1lfbuey7gvwM8jxwumsGXelDjkrku7z5YjQtTw== mani@thotamani"
+    key_name = "mani-key"
+    public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDoAv5kmCFOxsU1f8t87wKTZFlsD8qo/KhyoaOU0AnR6VXV4k+FQfs8LeA9aJvQTTHFNBj/prTffjpBfVzBcr0MaT+g1NMZtAr0xMzl+HC0yC+18nANF63I4MyAU7wEvCCsoiE1urOTjbCOXaozCuDEkQqePePKplI6GciCZzp6aY7PkygGGf2Xoge7kwqyt8JtJT9+OsGEQpFvRF6wp5S+dS+xDC8WRV2tw2G5tDk8HG2gnHwIIx0rwD6cJ+hlgTFjTDaWXM+fB6wU6V+EvxarzE/LCaqjHgcsqxMDjDTAT8M8cdAWf7YmVYWuFBJuUywVu6+iKBr1Vt0727xK0EOrMrjcFryVKy9PHPK8rGLajOHggphpKOTuDRcEuHpxREJSX2nTSlsfi66046XM9Lz0bptyxGN11cuKruGqEmDOycDhFaapNoGCui0y0e/xTGoOV7w+6QKaWg8rGcDaklljQvSTrXbKV3rjZ7ljj3m+voD+nu8XkqI8QiOHSzpMg3We5iRqEqqoqzGM9FEZFXK7tvZNxd3IK0/AwtNxoGchrxr+wYDBeaUh0f9Zklt2POMMplIV5eNJxbirL0qlOO6Ml+sJg5VcHafRIIEf+u3uqfiEP/NEbgZtWTipUukNwoXf1ZpXUQD0QpbVjImADGzntx+5ARbn+v7MZWhyDls6MQ== mani@thotamani"
 }
 
 # creating security group
@@ -27,3 +27,34 @@ resource "aws_security_group" "sg" {
         cidr_blocks = ["0.0.0.0/0"]
     }
 }
+
+# creating ec2 instance
+
+resource "aws_instance" "web_server" {
+    ami = "ami-0ecb62995f68bb549"
+    instance_type = "t3.medium"
+    subnet_id = aws_subnet.public_subnet.id
+    vpc_security_group_ids = [ aws_security_group.sg.id ]
+    key_name = "mani-key"
+    associate_public_ip_address = true
+
+    tags = {
+        Name= "terraform_instance"
+    }
+}
+
+# creating private ec2 instance
+
+resource "aws_instance" "private_server" {
+    ami = "ami-0ecb62995f68bb549"
+    instance_type = "t2.medium"
+    subnet_id = aws_subnet.private_subnet.id
+    vpc_security_group_ids = [ aws_security_group.sg.id ]
+    key_name = "mani-key"
+    associate_public_ip_address = false
+
+    tags = {
+        Name= "private_instance"
+    }
+}
+
