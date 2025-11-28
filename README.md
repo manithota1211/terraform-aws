@@ -67,3 +67,29 @@
   ```
 * **Purpose**: Use the public EC2 as a jump host to securely access the private EC2 instance
 
+
+
+### Verify the files are tracked by git
+
+# List tracked files
+git ls-files
+
+# Stop tracking files
+git rm --cached <file_name>
+git rm --cached *.tfstate
+git rm -r --cached <directory_name>
+
+
+* The files are removed from GitHub (the remote repo) because Git now considers them untracked.
+
+* Your local copies remain, so you haven’t lost anything on your machine.
+
+
+# Add the following to .gitignore to prevent tracking in the future
+*.tfstate
+*.tfstate.backup
+.terraform/
+mani-key
+mani-key.pub
+crash.log
+.terraform.lock.hcl
