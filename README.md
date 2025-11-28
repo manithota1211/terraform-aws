@@ -88,6 +88,7 @@ commands
 
 
 # Add the following to .gitignore to prevent tracking in the future
+
 *.tfstate
 *.tfstate.backup
 .terraform/
@@ -95,3 +96,4 @@ mani-key
 mani-key.pub
 crash.log
 .terraform.lock.hcl
+
