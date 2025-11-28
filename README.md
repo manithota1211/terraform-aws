@@ -72,15 +72,17 @@
 ### Verify the files are tracked by git
 
 # List tracked files
+```
 git ls-files
+```
 
 # Stop tracking files
 commands
-
-##### git rm --cached <file_name>
-##### git rm --cached *.tfstate
-##### git rm -r --cached <directory_name>
-
+```
+git rm --cached <file_name>
+git rm --cached *.tfstate
+git rm -r --cached <directory_name>
+```
 
 * The files are removed from GitHub (the remote repo) because Git now considers them untracked.
 
