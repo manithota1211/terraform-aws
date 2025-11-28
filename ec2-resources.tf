@@ -7,6 +7,8 @@ resource "aws_key_pair" "deployer" {
 
 # creating security group
 resource "aws_security_group" "sg" {
+    name = "mani_sg"
+    description = "security group for terraform"
     vpc_id = aws_vpc.main.id
 
     tags = {

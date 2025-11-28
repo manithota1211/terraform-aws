@@ -2,3 +2,6 @@
 *.tfstate
 *.tfstate.backup
 .terraform.lock.hcl
+crash.log
+mani.key
+mani-key.tf
