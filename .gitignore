@@ -3,5 +3,5 @@
 *.tfstate.backup
 .terraform.lock.hcl
 crash.log
-mani.key
+mani-key
 mani-key.pub
