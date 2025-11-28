@@ -30,7 +30,7 @@
 * **SSH Key Generation** (optional, if not already available):
 
   ```bash
-  ssh-keygen -t rsa -b 2048 -f mani-key.pem
+  ssh-keygen -t rsa -b 2048 -f <file name>
   ```
 * **Key Name**: mani-key
 * **Purpose**: Used to SSH into EC2 instances
