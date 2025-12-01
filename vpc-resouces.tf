@@ -1,10 +1,14 @@
 # creating VPC
 
 resource "aws_vpc" "main" {
-    cidr_block = "10.0.0.0/16"
+    cidr_block = var.vpc_cidr_block
+    instance_tenancy = "default"
+    
+
+    
 
     tags = {
-        Name = "main_vpc"
+        Name = var.vpc_name
     }
 }
 
@@ -12,10 +16,12 @@ resource "aws_vpc" "main" {
 
 resource "aws_subnet" "public_subnet" {
     vpc_id = aws_vpc.main.id
-    cidr_block = "10.0.1.0/24"
+    cidr_block = var.public_subnet_cidr
+    availability_zone = var.public_subnet_az
+
 
     tags = {
-        Name = "public_subnet"
+        Name = var.public_subnet_name
     }
 
 }
@@ -24,10 +30,11 @@ resource "aws_subnet" "public_subnet" {
 
 resource "aws_subnet" "private_subnet" {
     vpc_id = aws_vpc.main.id
-    cidr_block = "10.0.2.0/24"
+    cidr_block = var.private_subnet_cidr
+    availability_zone = var.private_subnet_az
 
     tags = {
-        Name = "private_subnet"
+        Name = var.private_subnet_name
     }
 
 }
@@ -36,7 +43,7 @@ resource "aws_internet_gateway" "main_igw" {
     vpc_id = aws_vpc.main.id
 
     tags = {
-        Name = "internet_gateway"
+        Name = var.internet_gateway_name
     }
 
 }
@@ -46,12 +53,12 @@ resource "aws_internet_gateway" "main_igw" {
 resource "aws_route_table" "public_route" {
     vpc_id = aws_vpc.main.id
       route {
-        cidr_block = "0.0.0.0/0"
+        cidr_block = var.public_route_cidr_block
         gateway_id = aws_internet_gateway.main_igw.id
       }
 
     tags = {
-        Name = "public_route_table"
+        Name = var.public_route_table_name
     }
    
 }
@@ -60,7 +67,7 @@ resource "aws_route_table" "public_route" {
 
 resource "aws_eip" "nat_ip" {
     tags = {
-        Name = "nat_eip"
+        Name = var.eip_name
 
     
     }
@@ -70,7 +77,7 @@ resource "aws_nat_gateway" "nat_gw" {
     subnet_id = aws_subnet.public_subnet.id
 
     tags = {
-        Name = "nat_gateway"
+        Name = var.nat_gateway_name
     }
 }
 
@@ -79,11 +86,11 @@ resource "aws_nat_gateway" "nat_gw" {
 resource "aws_route_table" "private_route" {
     vpc_id = aws_vpc.main.id
       route {
-        cidr_block = "0.0.0.0/0"
+        cidr_block = var.private_route_cidr_block
         nat_gateway_id = aws_nat_gateway.nat_gw.id
       }
     tags = {
-      Name = "private_route_table"
+      Name = var.private_route_table_name
   }
         
 }
@@ -95,9 +102,10 @@ resource "aws_route_table_association" "public_subnet" {
     route_table_id = aws_route_table.public_route.id
 }
 
-# creating privateroute table associations
+# creating private route table associations
 
 resource "aws_route_table_association" "private_subnet_bar" {
     subnet_id = aws_subnet.private_subnet.id
     route_table_id = aws_route_table.private_route.id
 }
+
