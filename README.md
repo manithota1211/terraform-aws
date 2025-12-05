@@ -100,3 +100,36 @@ mani-key.pub
 crash.log
 .terraform.lock.hcl
 ```
+
+
+<!-- 
+Resetting Git When History Already Exists (Windows)
+
+If Git has already tracked the project and contains unwanted history, remove the existing .git folder.
+
+Restart your PC to clear Windows file locks.
+
+After reboot, open PowerShell as Administrator and run: -->
+
+```
+cd C:\WORKSPACE\Terraform-modules-wipro-25
+Remove-Item -Recurse -Force .git
+# or
+rm -r -force .git
+```
+
+<!-- Reinitialize Git: -->
+```
+git init
+```
+<!-- If you receive a permission or remote error, reset the remote:
+if you want to add another repo just remove current one or you can use 
+set-url -->
+
+```
+git remote remove origin
+git remote add origin https://github.com/YourName/NewRepo.git
+git remote set-url origin <url>
+git push -u origin main
+
+```
