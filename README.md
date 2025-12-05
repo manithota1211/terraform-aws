@@ -102,14 +102,14 @@ crash.log
 ```
 
 
-<!-- 
-Resetting Git When History Already Exists (Windows)
 
-If Git has already tracked the project and contains unwanted history, remove the existing .git folder.
+# Resetting Git When History Already Exists (Windows)
 
-Restart your PC to clear Windows file locks.
+**If Git has already tracked the project and contains unwanted history, remove the existing .git folder.**
 
-After reboot, open PowerShell as Administrator and run: -->
+**Restart your PC to clear Windows file locks.**
+
+*After reboot, open PowerShell as Administrator and run:*
 
 ```
 cd C:\WORKSPACE\Terraform-modules-wipro-25
@@ -118,13 +118,14 @@ Remove-Item -Recurse -Force .git
 rm -r -force .git
 ```
 
-<!-- Reinitialize Git: -->
+# Reinitialize Git:
 ```
 git init
 ```
-<!-- If you receive a permission or remote error, reset the remote:
-if you want to add another repo just remove current one or you can use 
-set-url -->
+**If you receive a permission or remote error, reset the remote:**
+
+**If you want to add another repo just remove current one or you can use 
+set-url:**
 
 ```
 git remote remove origin
